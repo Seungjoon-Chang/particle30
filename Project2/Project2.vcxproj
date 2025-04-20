@@ -19,7 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\소스.cpp" />
+    <ClInclude Include="Common.h" />
+    <ClInclude Include="ms.h" />
+    <ClInclude Include="sj.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
