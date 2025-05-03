@@ -1,32 +1,98 @@
-#include <iostream>      // std::cout, std::cin
-#include <fstream>       // std::ifstream
-#include <sstream>       // std::istringstream
-#include <string>        // std::string
-#include <vector>        // std::vector
-#include <cstdio>        // sscanf
-#include <cstdlib>       // atof
-#include <cstring>       // strtok
-#include <limits>        // std::numeric_limits
+//#include <iostream>      // std::cout, std::cin
+//#include <fstream>       // std::ifstream
+//#include <sstream>       // std::istringstream
+//#include <string>        // std::string
+//#include <vector>        // std::vector
+//#include <cstdio>        // sscanf
+//#include <cstdlib>       // atof
+//#include <cstring>       // strtok
+//#include <limits>        // std::numeric_limits
 
 
-struct Matrix_Size
+#include <vector>
+#include <string>
+#include <fstream>
+#include <sstream>
+#include <stdexcept>
+
+
+std::vector<double>
+makeTable(const std::string& file_name, MatrixSize& size_out)
 {
-	int num_rows;
-	int num_columns;
-};
+    std::ifstream file(file_name);
+    if (!file)
+        throw std::runtime_error("file input error");
 
-int test(void)
-{
-	return 1;
+    std::vector<double> data_table;      
+    std::string line;
+    int cols_fixed = 0;
+    int current_row = 0;
+
+    while (std::getline(file, line))
+    {
+        ++current_row;                   
+        std::istringstream iss(line);
+        double value;
+        int col_count_this_row = 0;
+
+        while (iss >> value)             
+        {
+            data_table.push_back(value);
+            ++col_count_this_row;
+        }
+
+        if (cols_fixed == 0)           
+            cols_fixed = col_count_this_row;
+    }
+
+    size_out.rows = current_row;
+    size_out.cols = cols_fixed;
+
+    return data_table;                
 }
 
-Matrix_Size find_matrix_size_from_file(std::ifstream& file)
-{
-	Matrix_Size result;
-    result.num_rows = 1;
-    result.num_columns = 2;
-    return result;
+
+struct MatrixSize {
+    int rows{ 0 };
+    int cols{ 0 };
 };
+
+
+//MatrixSize getMatrixSize(const std::string& filename)
+//{
+//    std::ifstream input(filename);
+//    if (!input)
+//        std::cout << "file input error";
+//
+//    std::string line;
+//    double intRows = 0;
+//    double intCols = 0;
+//
+//    while (std::getline(input, line)) {
+//        std::istringstream iss(line);
+//        double currentCols = 0;
+//        double dummy;
+//       
+//        while (iss >> dummy)         // 공백(스페이스·탭) 구분 숫자 읽기
+//            ++currentCols;
+//
+//        if (currentCols == 0)
+//            continue;
+//
+//        if (intRows == 0)            // 첫 유효 행: 열 수 확정
+//            intCols = currentCols;
+//
+//        ++intRows;
+//    }
+//
+//    if (intRows == 0)
+//        throw std::runtime_error("no numeric data found in file");
+//
+//    // 최종 반환 시 double 로 변환
+//    return { static_cast<int>(intRows), static_cast<int>(intCols) };
+//}
+
+
 
 
 

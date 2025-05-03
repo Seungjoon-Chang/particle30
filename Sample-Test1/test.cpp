@@ -4,44 +4,7 @@
 
 #include <fstream>
 
-TEST(TestCaseName, TestName) {
-	std::ifstream file1("matrix.dat");
-	std::ifstream file2("matrix.dat");
-
-	EXPECT_TRUE(file1.is_open());
-	EXPECT_TRUE(file2.is_open());
-}
-
-TEST(TestCaseName, TestName2) {
-	std::ofstream file1("matrix.dat");
-	std::ifstream file2("matrix.dat");
-
-	EXPECT_TRUE(file1.is_open());
-	EXPECT_TRUE(file2.is_open());
-}
-
-TEST(TestCaseName, TestName3) {
-
-	// 쓰는 함수를 하는데 
-	std::ofstream file1("test.txt");
-	file1 << "abc";
-
-	std::ifstream file2("test.txt");
-	std::string str;
-	file2 >> str;
-
-	EXPECT_TRUE(file1.is_open());
-	EXPECT_TRUE(file2.is_open());
-}
-
-TEST(Name1, Name2)
-{
-	const int result = test();
-	constexpr int reference = 1;
-	EXPECT_EQ(result, reference);
-}
-
-TEST(Name1, Name3)
+TEST(SJ, getMatrixSize)
 {
 	constexpr const char* file_name = "test.txt";
 	{
@@ -50,19 +13,50 @@ TEST(Name1, Name3)
 	}
 
 	std::ifstream read_file(file_name);
-	Matrix_Size result = { 2,3 };
+	MatrixSize result = getMatrixSize(file_name);
 
-	const int num_values = result.num_rows * result.num_columns;
-	std::vector<double> values(num_values); //3번 
+	EXPECT_EQ(result.rows, 2);
+	EXPECT_EQ(result.cols, 3);
+}
 
-	for (int i = 0; i < num_values; ++i)
-		read_file >> values[i];
+TEST(SJ, getMatrixSize2)
+{
+	constexpr const char* file_name = "test.txt";
+	{
+		std::ofstream out_file(file_name);
+		out_file << "1.0 1.1 1.3 1.4 \n2.1 2.2 2.3 2.4\n3.1 3.2 3.3 3.4";
+	}
 
-	int debug = 0;
+	std::ifstream read_file(file_name);
+	MatrixSize result = getMatrixSize(file_name);
 
-	//const Matrix_Size result = find_matrix_size_from_file(read_file);
-	//constexpr Matrix_Size reference = { 3,4 };
-	//EXPECT_EQ(result, reference);
+	EXPECT_EQ(result.rows, 3);
+	EXPECT_EQ(result.cols, 4);
+}
+
+TEST(SJ, temp1)
+{
+	constexpr const char* file_name = "test.txt";
+	{
+		std::ofstream out_file(file_name);
+		out_file << "1.0 1.1 1.3\n2.1 2.2 2.3";
+	}
+
+	MatrixSize result = getMatrixSize(file_name);
+
+	std::ifstream read_file(file_name);
+	const int numValues = result.rows * result.cols;
+	std::vector<double> vals(numValues);
+	for (int i = 0; i < numValues; ++i)
+		read_file >> vals[i];
+
+	std::vector<double> ref = { 1.0, 1.1,1.3,2.1,2.2,2.3 };
+	EXPECT_EQ(vals, ref);
+
+
+	std::vector<double> subValues(5);
+
+
 }
 
 //
