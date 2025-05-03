@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Common.h" />
     <ClInclude Include="ms.h" />
     <ClInclude Include="sj.h" />
   </ItemGroup>

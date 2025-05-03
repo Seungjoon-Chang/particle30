@@ -18,9 +18,6 @@
     <ClInclude Include="ms.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Common.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="sj.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
