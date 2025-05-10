@@ -22,6 +22,9 @@
     <ClInclude Include="ms.h" />
     <ClInclude Include="sj.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ms.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
